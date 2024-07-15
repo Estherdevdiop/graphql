@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const jwt = data ; // Adaptez selon le champ correct
                 if (jwt) {
                     document.body.innerHTML = ''
-                    document.body.innerHTML = 'je suis connecté'
+                    // document.body.innerHTML = 'je suis connecté'
                     localStorage.setItem('jwt', jwt);
                     console.log("JWT:", jwt);
-                    // window.location.href = 'profile.html';
+                    window.location.href = 'profil.html';
                 } else {
                     console.error("JWT non trouvé dans la réponse.");
                     errorMessage.textContent = 'Erreur lors de la connexion. Veuillez réessayer.';
