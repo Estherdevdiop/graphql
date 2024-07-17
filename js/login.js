@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       localStorage.setItem("jwt", data);
       console.log("token", data);
+      window.location.href = "profile.html";
     } catch (error) {
       errorMessage.textContent = error.message;
     }
