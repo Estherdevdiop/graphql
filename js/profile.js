@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p>Last Name: ${user.lastName}</p>
         <p>Total Down: ${user.totalDown}</p>
         <p>Total Up: ${user.totalUp}</p>
-        <p>cntry: ${user.campus}</p>
+        <p>contry: ${user.campus}</p>
          <p>ratio: ${user.auditRatio}</p>
         
       `;
