@@ -4,19 +4,19 @@ body {
   padding: 0;
   background-color: black;
   background-image: url(https://learn.zone01dakar.sn/assets/img/01-trame.svg);
- 
+
 }
-/* 
+
 .profile-container {
   max-width: 200px;
-  margin: auto;
+  margin: auto 0; /* Pour annuler la marge automatique centrée */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f9f9f9;
-  color: black;
-  position: relative;
-} */
+  position: relative; /* Ajoutez ceci si nécessaire pour le positionnement absolu des enfants */
+  left: 0; /* Assurez-vous que le conteneur soit aligné à gauche */
+}
 
 #logout {
   position: absolute;
@@ -36,7 +36,7 @@ body {
 
 #chart-container {
   display: flex;
-  justify-content: flex-start; /* Aligner à gauche */
+  justify-content: space-around; /* Aligner à gauche et à droite */
   align-items: center;
   margin-top: 20px;
   padding: 20px;
@@ -44,20 +44,8 @@ body {
   border-radius: 10px; /* Bords arrondis */
 }
 
-#chart {
-  max-width: 1200px;
+#bar-chart, #pie-chart {
+  max-width: 800px;
   max-height: 600px;
 }
-
-.profile-container {
-  max-width: 200px;
-  margin: auto 0; /* Pour annuler la marge automatique centrée */
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  position: relative; /* Ajoutez ceci si nécessaire pour le positionnement absolu des enfants */
-  left: 0; /* Assurez-vous que le conteneur soit aligné à gauche */
-}
-
 

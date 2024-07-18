@@ -60,8 +60,70 @@ document.addEventListener("DOMContentLoaded", async () => {
         const projectNames = projectData.transaction.map(tx => tx.object.name);
         const projectXP = projectData.transaction.map(tx => tx.amount);
 
-        // Draw the chart
-        drawBarChart(projectXP, projectNames, 'chart');
+        // Draw the bar chart
+        drawBarChart(projectXP, projectNames, 'bar-chart');
+
+        // Fetch skill data
+        const skillData = await fetchGraphQL(token, `
+            query {
+                user {
+                    transactions(where: {
+                        type: {_ilike: "%skill%"}
+                    }) {
+                        type
+                        amount
+                    }
+                }
+            }
+        `);
+
+        if (!skillData || !skillData.user || skillData.user.length === 0) {
+            throw new Error("No skill data found");
+        }
+
+        // Process skill data for chart
+        var langSkills = {
+            "Go": 0,
+            "Js": 0,
+            "Rust": 0,
+            "Html": 0,
+            "Css": 0,
+            "Unix": 0,
+            "Docker": 0,
+            "Sql": 0,
+            "C": 0
+        };
+
+        for (var i = 0; i < skillData.user[0].transactions.length; i++) {
+            var skill = skillData.user[0].transactions[i].type.toLowerCase();
+            var amount = skillData.user[0].transactions[i].amount;
+
+            if (skill.includes("_go")) {
+                langSkills["Go"] = Math.max(langSkills["Go"], amount);
+            } else if (skill.includes("js")) {
+                langSkills["Js"] = Math.max(langSkills["Js"], amount);
+            } else if (skill.includes("rust")) {
+                langSkills["Rust"] = Math.max(langSkills["Rust"], amount);
+            } else if (skill.includes("html")) {
+                langSkills["Html"] = Math.max(langSkills["Html"], amount);
+            } else if (skill.includes("css")) {
+                langSkills["Css"] = Math.max(langSkills["Css"], amount);
+            } else if (skill.includes("unix")) {
+                langSkills["Unix"] = Math.max(langSkills["Unix"], amount);
+            } else if (skill.includes("docker")) {
+                langSkills["Docker"] = Math.max(langSkills["Docker"], amount);
+            } else if (skill.includes("sql")) {
+                langSkills["Sql"] = Math.max(langSkills["Sql"], amount);
+            } else if (skill.includes("_c")) {
+                langSkills["C"] = Math.max(langSkills["C"], amount);
+            }
+        }
+
+        const skills = Object.keys(langSkills);
+        const skillValues = Object.values(langSkills);
+
+        // Draw the pie chart
+        drawPieChart(skillValues, skills, 'pie-chart');
 
     } catch (error) {
         console.error(error);
@@ -143,6 +205,7 @@ function drawBarChart(data, labels, chartId) {
         valueText.setAttribute('y', y - 10);
         valueText.setAttribute('text-anchor', 'middle');
         valueText.setAttribute('fill', 'white');
+        valueText.setAttribute('style', 'font-size: 10px;');
         valueText.setAttribute('transform', `rotate(-45, ${x + (barWidth - 10) / 2}, ${y - 10})`);
         valueText.textContent = formatXP(d);
         svg.appendChild(valueText);
@@ -157,9 +220,69 @@ function drawBarChart(data, labels, chartId) {
         text.setAttribute('y', y);
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('fill', 'white');
-        text.setAttribute('style', 'font-size: 12px;');
+        text.setAttribute('style', 'font-size: 10px;');
         text.setAttribute('transform', `rotate(-45, ${x}, ${y})`);
         text.textContent = label.length > 15 ? label.substring(0, 12) + '...' : label;
         svg.appendChild(text);
+    });
+}
+
+// Function to draw pie chart
+function drawPieChart(data, labels, chartId) {
+    const svg = document.getElementById(chartId);
+    const width = svg.getAttribute('width');
+    const height = svg.getAttribute('height');
+    const radius = Math.min(width, height) / 2 - 40;
+
+    const total = data.reduce((sum, value) => sum + value, 0);
+    let startAngle = 0;
+
+    const colors = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#ffa600', '#00bfae', '#ff5722', '#8bc34a'];
+
+    data.forEach((d, i) => {
+        const sliceAngle = (d / total) * 2 * Math.PI;
+        const endAngle = startAngle + sliceAngle;
+
+        const x1 = width / 2 + radius * Math.cos(startAngle);
+        const y1 = height / 2 - radius * Math.sin(startAngle);
+        const x2 = width / 2 + radius * Math.cos(endAngle);
+        const y2 = height / 2 - radius * Math.sin(endAngle);
+
+        const largeArcFlag = sliceAngle > Math.PI ? 1 : 0;
+
+        const pathData = [
+            `M ${width / 2} ${height / 2}`,
+            `L ${x1} ${y1}`,
+            `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+            'Z'
+        ].join(' ');
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathData);
+        path.setAttribute('fill', colors[i % colors.length]);
+        svg.appendChild(path);
+
+        startAngle = endAngle;
+    });
+
+    // Add labels
+    startAngle = 0;
+    data.forEach((d, i) => {
+        const sliceAngle = (d / total) * 2 * Math.PI;
+        const endAngle = startAngle + sliceAngle;
+
+        const x = width / 2 + (radius / 1.5) * Math.cos(startAngle + sliceAngle / 2);
+        const y = height / 2 - (radius / 1.5) * Math.sin(startAngle + sliceAngle / 2);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x);
+        text.setAttribute('y', y);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', 'white'); // Set text color to white for visibility
+        text.setAttribute('style', 'font-size: 10px;');
+        text.textContent = `${labels[i]} (${d})`;
+        svg.appendChild(text);
+
+        startAngle = endAngle;
     });
 }
