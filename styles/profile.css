@@ -1,3 +1,54 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  background-image: url(https://learn.zone01dakar.sn/assets/img/01-trame.svg);
+ 
+}
+/* 
+.profile-container {
+  max-width: 200px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  color: black;
+  position: relative;
+} */
+
+#logout {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#logout:hover {
+  background-color: #0056b3;
+}
+
+#chart-container {
+  display: flex;
+  justify-content: flex-start; /* Aligner à gauche */
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1); /* Fond transparent */
+  border-radius: 10px; /* Bords arrondis */
+}
+
+#chart {
+  max-width: 1200px;
+  max-height: 600px;
+}
+
 .profile-container {
   max-width: 200px;
   margin: auto 0; /* Pour annuler la marge automatique centrée */
@@ -9,12 +60,4 @@
   left: 0; /* Assurez-vous que le conteneur soit aligné à gauche */
 }
 
-  #logout {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-  body{
-    background-color: black;
-    background-image: url(https://learn.zone01dakar.sn/assets/img/01-trame.svg);
-  }
+
