@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("jwt");
     if (!token) {
-        window.location.href = "index.html"; // redirige vers la page de connexion si pas de token
+        window.location.href = "index.html";
         return;
     }
 
@@ -33,11 +33,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             <p>Email: ${user.email}</p>
             <p>First Name: ${user.firstName}</p>
             <p>Last Name: ${user.lastName}</p>
-            <p>Total Down: ${user.totalDown}</p>
-            <p>Total Up: ${user.totalUp}</p>
             <p>Country: ${user.campus}</p>
             <p>Ratio: ${user.auditRatio}</p>
         `;
+
+        // Draw the horizontal bar chart for Total Down, Total Up, and Ratio
+        drawHorizontalBarChart([user.totalDown, user.totalUp, user.auditRatio], ["Total Down", "Total Up", "Ratio"], 'horizontal-bar-chart');
 
         // Fetch project data
         const projectData = await fetchGraphQL(token, `
@@ -278,11 +279,72 @@ function drawPieChart(data, labels, chartId) {
         text.setAttribute('x', x);
         text.setAttribute('y', y);
         text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('fill', 'white'); // Set text color to white for visibility
+        text.setAttribute('fill', 'white');
         text.setAttribute('style', 'font-size: 10px;');
         text.textContent = `${labels[i]} (${d})`;
         svg.appendChild(text);
 
         startAngle = endAngle;
     });
+}
+
+// Function to draw horizontal bar chart
+function drawHorizontalBarChart(data, labels, chartId) {
+    const svg = document.getElementById(chartId);
+    const width = svg.getAttribute('width');
+    const height = svg.getAttribute('height');
+    const padding = 20;
+    const barHeight = (height - 2 * padding) / data.length;
+
+    const maxDataValue = Math.max(...data);
+
+    // Scale functions
+    const xScale = (value) => padding + (value * (width - 2 * padding) / maxDataValue);
+    const yScale = (index) => padding + (index * barHeight);
+
+    // Draw bars
+    data.forEach((d, i) => {
+        const x = padding;
+        const y = yScale(i);
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y);
+        rect.setAttribute('width', xScale(d));
+        rect.setAttribute('height', barHeight - 10);
+        rect.setAttribute('fill', 'steelblue');
+        rect.setAttribute('rx', '5'); // Rounded corners
+        svg.appendChild(rect);
+
+        // Add labels on the left of the bars
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x - 5);
+        text.setAttribute('y', y + (barHeight - 10) / 2 + 5);
+        text.setAttribute('text-anchor', 'end');
+        text.setAttribute('fill', 'white');
+        text.setAttribute('style', 'font-size: 12px;');
+        text.textContent = labels[i];
+        svg.appendChild(text);
+
+        // Add value labels on the right of the bars
+        const valueText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        valueText.setAttribute('x', x + xScale(d) + 5);
+        valueText.setAttribute('y', y + (barHeight - 10) / 2 + 5);
+        valueText.setAttribute('text-anchor', 'start');
+        valueText.setAttribute('fill', 'white');
+        valueText.setAttribute('style', 'font-size: 12px;');
+        valueText.textContent = formatValue(d, labels[i]);
+        svg.appendChild(valueText);
+    });
+}
+
+function formatValue(value, label) {
+    if (label === "Ratio") {
+        return value.toFixed(1);
+    }
+    if (value >= 1e6) {
+        return (value / 1e6).toFixed(2) + ' MB';
+    } else if (value >= 1e3) {
+        return (value / 1e3).toFixed(2) + ' kB';
+    }
+    return value.toString();
 }
