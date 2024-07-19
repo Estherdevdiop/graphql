@@ -6,28 +6,10 @@ body {
   background-image: url(https://learn.zone01dakar.sn/assets/img/01-trame.svg);
   color: white;
 }
-
-/* .profile-container {
-  display: flex;
-  align-items: flex-start;
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-  position: relative;
-} */
-
-#user-info {
-  flex: 1;
+#user-info p {
+  margin-bottom: 10px; /* Ajoute de l'espace entre les éléments <p> */
+  font-style: italic; /* Applique un style en italique */
 }
-
-/* #bar-chart-container {
-  flex: 0 0 400px;
-  margin-left: 20px;
-} */
 
 .logout-btn {
   margin-top: 20px;
@@ -48,16 +30,6 @@ body {
   background-color: #c57b7b;
 }
 
-/* 
-#chart-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-} */
 
 #bar-chart, #pie-chart {
   max-width: 800px;
@@ -81,11 +53,11 @@ body {
 #bar-chart-container {
   width: 70%; /* Limiter la largeur du conteneur */
   margin-top: 20px;
-  margin-right: 15%; /* Ajouter une marge à droite pour le décaler */
+  margin-left: 10%; /* Ajouter une marge à droite pour le décaler */
 }
 
 #horizontal-bar-chart {
   width: 100%;
-  height: 250px; /* Augmentez cette valeur si nécessaire */
+  height: 250px;
 }
 
