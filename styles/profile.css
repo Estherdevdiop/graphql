@@ -29,21 +29,25 @@ body {
   margin-left: 20px;
 }
 
-#logout {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #007BFF;
+.logout-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: rgba(54, 206, 244, 0.815);
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
-#logout:hover {
-  background-color: #0056b3;
+
+.logout-btn:hover {
+  background-color: #d32f2f;
 }
+
 
 #chart-container {
   display: flex;
