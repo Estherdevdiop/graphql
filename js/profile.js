@@ -293,7 +293,7 @@ function drawHorizontalBarChart(data, labels, chartId) {
     const svg = document.getElementById(chartId);
     const width = svg.clientWidth;
     const height = svg.getAttribute('height');
-    const padding = 50;
+    const padding = 60;
     const barHeight = (height - 2 * padding) / data.length;
 
     const maxDataValue = Math.max(...data);
@@ -326,17 +326,17 @@ function drawHorizontalBarChart(data, labels, chartId) {
         text.setAttribute('y', y + (barHeight - 10) / 2 + 5);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', 'white');
-        text.setAttribute('style', 'font-size: 9px;');
+        text.setAttribute('style', 'font-size: 12px;');
         text.textContent = labels[i];
         svg.appendChild(text);
 
         // Add value labels on the right of the bars
         const valueText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        valueText.setAttribute('x', x + xScale(d) + 10);
+        valueText.setAttribute('x', Math.min(x + xScale(d) + 10, width - padding - 10));
         valueText.setAttribute('y', y + (barHeight - 10) / 2 + 5);
         valueText.setAttribute('text-anchor', 'start');
         valueText.setAttribute('fill', 'white');
-        valueText.setAttribute('style', 'font-size: 9px;');
+        valueText.setAttribute('style', 'font-size: 12px;');
         valueText.textContent = formatValue(d, labels[i]);
         svg.appendChild(valueText);
     });
@@ -353,3 +353,4 @@ function formatValue(value, label) {
     }
     return value.toString();
 }
+
