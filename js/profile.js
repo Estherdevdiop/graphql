@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <p>First Name: ${user.firstName}</p>
             <p>Last Name: ${user.lastName}</p>
             <p>Country: ${user.campus}</p>
-            <p>Ratio: ${user.auditRatio}</p>
+           
         `;
 
         // Draw the horizontal bar chart for Total Down, Total Up, and Ratio

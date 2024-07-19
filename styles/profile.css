@@ -9,16 +9,15 @@ body {
 
 .profile-container {
   display: flex;
-  /* align-items: flex-start; */
-  /* max-width: 800px; */
-  /* margin: 20px; */
-  margin-top: 20px;
+  align-items: flex-start;
+  max-width: 900px; /* Augmenter la largeur pour plus d'espace */
+  margin: auto;
   padding: 20px;
-  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
-  /* position: relative; */
+  position: relative;
 }
 
 #user-info {
