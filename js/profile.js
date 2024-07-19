@@ -291,9 +291,9 @@ function drawPieChart(data, labels, chartId) {
 // Function to draw horizontal bar chart
 function drawHorizontalBarChart(data, labels, chartId) {
     const svg = document.getElementById(chartId);
-    const width = svg.getAttribute('width');
+    const width = svg.clientWidth;
     const height = svg.getAttribute('height');
-    const padding = 20;
+    const padding = 50;
     const barHeight = (height - 2 * padding) / data.length;
 
     const maxDataValue = Math.max(...data);
@@ -301,6 +301,11 @@ function drawHorizontalBarChart(data, labels, chartId) {
     // Scale functions
     const xScale = (value) => padding + (value * (width - 2 * padding) / maxDataValue);
     const yScale = (index) => padding + (index * barHeight);
+
+    // Clear previous content
+    while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+    }
 
     // Draw bars
     data.forEach((d, i) => {
@@ -317,21 +322,21 @@ function drawHorizontalBarChart(data, labels, chartId) {
 
         // Add labels on the left of the bars
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', x - 5);
+        text.setAttribute('x', x - 10);
         text.setAttribute('y', y + (barHeight - 10) / 2 + 5);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', 'white');
-        text.setAttribute('style', 'font-size: 12px;');
+        text.setAttribute('style', 'font-size: 9px;');
         text.textContent = labels[i];
         svg.appendChild(text);
 
         // Add value labels on the right of the bars
         const valueText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        valueText.setAttribute('x', x + xScale(d) + 5);
+        valueText.setAttribute('x', x + xScale(d) + 10);
         valueText.setAttribute('y', y + (barHeight - 10) / 2 + 5);
         valueText.setAttribute('text-anchor', 'start');
         valueText.setAttribute('fill', 'white');
-        valueText.setAttribute('style', 'font-size: 12px;');
+        valueText.setAttribute('style', 'font-size: 9px;');
         valueText.textContent = formatValue(d, labels[i]);
         svg.appendChild(valueText);
     });

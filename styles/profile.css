@@ -7,10 +7,10 @@ body {
   color: white;
 }
 
-.profile-container {
+/* .profile-container {
   display: flex;
   align-items: flex-start;
-  max-width: 900px; /* Augmenter la largeur pour plus d'espace */
+  max-width: 900px;
   margin: auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -18,16 +18,16 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
   position: relative;
-}
+} */
 
 #user-info {
   flex: 1;
 }
 
-#bar-chart-container {
+/* #bar-chart-container {
   flex: 0 0 400px;
   margin-left: 20px;
-}
+} */
 
 .logout-btn {
   margin-top: 20px;
@@ -35,7 +35,7 @@ body {
   background-color: rgba(54, 206, 244, 0.815);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   font-size: 16px;
   position: absolute;
@@ -45,10 +45,10 @@ body {
 
 
 .logout-btn:hover {
-  background-color: #d32f2f;
+  background-color: #c57b7b;
 }
 
-
+/* 
 #chart-container {
   display: flex;
   justify-content: space-around;
@@ -57,9 +57,34 @@ body {
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-}
+} */
 
 #bar-chart, #pie-chart {
   max-width: 800px;
   max-height: 600px;
+}
+
+.profile-container {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1000px; /* Augmenter la largeur pour plus d'espace */
+  width: 100%; /* Assurez-vous qu'il prenne toute la largeur disponible */
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  position: relative;
+}
+
+#bar-chart-container {
+  width: 100%;
+  margin-top: 20px;
+  
+}
+
+#horizontal-bar-chart {
+  width: 100%;
+  height: 250px; /* Augmentez cette valeur si nécessaire */
 }
