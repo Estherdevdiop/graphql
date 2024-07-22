@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const credentials = btoa(`${username}:${password}`);
+    // const credentials = btoa(`${username}:${password}`);
+    const credentials = btoa(`${username}:${unescape(encodeURIComponent(password))}`);
     const body = {
       username: username,
       password: password,
