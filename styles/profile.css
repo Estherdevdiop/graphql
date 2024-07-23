@@ -24,11 +24,11 @@ body {
   top: 20px;
   right: 20px;
   z-index: 1000; /* Assurez-vous que le bouton est au-dessus des autres éléments */
-  border: 2px solid red; /* Ajouter une bordure rouge pour la visibilité */
+  border: 2px solid rgb(22, 129, 201); /* Ajouter une bordure rouge pour la visibilité */
 }
 
 .logout-btn:hover {
-  background-color: #e01c1c;
+  background-color: #5b72db;
 }
 
 
@@ -50,6 +50,7 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
   position: relative;
+ 
 }
 
 #bar-chart-container {
@@ -62,6 +63,14 @@ body {
   width: 100%;
   height: 250px;
 }
+
+.separator {
+  width: 2px;
+  height: 100%;
+  background-color: red;
+  margin: 0 20px;
+}
+
 
 @media (max-width: 600px) {
   .logout-btn {

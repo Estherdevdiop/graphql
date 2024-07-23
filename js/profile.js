@@ -19,6 +19,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     totalUp
                     campus
                     auditRatio
+                    transactions_aggregate(where: {
+                        event : { path: { _eq: "/dakar/div-01" } } 
+                        _and: { type: { _eq: "xp" } }
+                    }) {
+                        aggregate {
+                            sum {
+                                amount
+                            }
+                        }
+                    }
                 }
             }
         `);
@@ -28,13 +38,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         const user = userData.user[0];
+        const totalXP = user.transactions_aggregate.aggregate.sum.amount || 0;
+
         userInfoDiv.innerHTML = `
             <h2>${user.login}</h2>
             <p>Email: ${user.email}</p>
             <p>First Name: ${user.firstName}</p>
             <p>Last Name: ${user.lastName}</p>
             <p>Country: ${user.campus}</p>
-           
+            <p>Total XP: ${formatXP(totalXP)}</p>
         `;
 
         // Draw the horizontal bar chart for Total Down, Total Up, and Ratio
@@ -149,6 +161,15 @@ async function fetchGraphQL(token, query) {
 
     const result = await response.json();
     return result.data;
+}
+
+function formatXP(amount) {
+    if (amount >= 1e6) {
+        return (amount / 1e6).toFixed(2) + ' MB';
+    } else if (amount >= 1e3) {
+        return (amount / 1e3).toFixed(0) + ' kB';
+    }
+    return amount.toString();
 }
 
 // Function to draw bar chart
@@ -353,4 +374,3 @@ function formatValue(value, label) {
     }
     return value.toString();
 }
-
